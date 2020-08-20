@@ -26,11 +26,11 @@ name: 'DetailSwiper',
  },
  methods: {
      imgLoad() {
-         console.log("加载完");
+         //console.log("加载完");
      }
  },
  created() {
-     console.log(this.topImages);
+     //console.log(this.topImages);
  },
 }
 </script>
@@ -40,7 +40,7 @@ name: 'DetailSwiper',
 
 }
 .swiper-item{
-    height: 330px;
+    height: 340px;
     overflow: hidden;
 } 
 </style>
