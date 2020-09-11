@@ -10,7 +10,7 @@
         <detail-goods-info :detailInfo="detailInfo" @imgLoad="imgLoad"></detail-goods-info>
         <detail-param-info ref="params" :paramInfo="paramInfo"></detail-param-info>
         <detail-comment-info ref="comment" :commentInfo="commentInfo"></detail-comment-info>
-        <goods-list ref="recommend" :goods="recommends"></goods-list>
+        <goods-list ref="recommend" :goods="recommends" @itemImageLoad="itemImageLoad"></goods-list>
     </scroll>
     <detail-bottom-bar @addCart="addToCart"></detail-bottom-bar>
     <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
@@ -75,7 +75,7 @@ mixins: [backTopMixin],
          this.themeTopY.push(-this.$refs.params.$el.offsetTop + 44)
          this.themeTopY.push(-this.$refs.comment.$el.offsetTop + 44)
          this.themeTopY.push(-this.$refs.recommend.$el.offsetTop + 44)
-         this.themeTopY.push(Number.MAX_VALUE)
+      
          //console.log(this.themeTopY);
      },
      titleClick(index) {
@@ -84,16 +84,10 @@ mixins: [backTopMixin],
      },
      contentScroll(position) {
          const positionY =  position.y
-
          let length = this.themeTopY.length
-         for(let i=0; i< length-1; i++) {
-             //console.log(i);
-            //  if(positionY < this.themeTopY[i] && positionY > this.themeTopY[i+1]) {
-            //      console.log(i);
-            //  }
-            if (this.currnetIndex !== i && positionY <= this.themeTopY[i]) {
-                this.currnetIndex = i
-                this.$refs.nav.currentIndex = this.currnetIndex
+         for(let i=0; i < length; i++) {
+            if (positionY <= this.themeTopY[i]) {
+                this.$refs.nav.currentIndex = i
             } 
             // && positionY > this.themeTopY[i+1])
             // if(this.currnetIndex !== i && (i<length -1 
@@ -106,6 +100,10 @@ mixins: [backTopMixin],
             // }
          }
          this.listenShowBackTop(position)
+     },
+     itemImageLoad() {
+        const refresh = debounce(this.$refs.scroll.refresh,500)
+        refresh()
      },
      addToCart() {
          //获取购物车展示的信息
@@ -122,10 +120,12 @@ mixins: [backTopMixin],
             this.$toast.show(res, 1200)
         })
 
-     }
+     },
+     
  },
  created() {
-     this.iid = this.$route.params.iid
+    //  this.iid = this.$route.params.iid
+    this.iid = this.$route.query.iid
 
      getDetail(this.iid).then(res => {
          console.log(res);
@@ -141,15 +141,9 @@ mixins: [backTopMixin],
      }),
      getRecommend().then(res => {
          this.recommends = res.data.list
-         //console.log(this.recommends);
      })
  },
  mounted() {
-     const refresh = debounce(this.$refs.scroll.refresh,500)
-     this.itemListener = () => {
-         refresh()
-     }
-     this.$bus.$on('detailItemImageLoad', this.itemListener)
  },
  updated() {
     //  this.themeTopY = []
@@ -160,7 +154,6 @@ mixins: [backTopMixin],
     //  console.log(this.themeTopY);
  },
  destroyed() {
-     //this.$bus.$off('itemImageLoad',this.itemListener)
  },
 }
 </script>

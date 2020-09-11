@@ -9,13 +9,13 @@
     <div class="info-other">
         <span>{{goods.columns[0]}}</span>
         <span>{{goods.columns[1]}}</span>
-        <span>{{goods.services[3].name}}</span>
+        <span>{{goods.columns[2]}}</span>
     </div>
     <div class="info-service">
         <span
         :key="index"
         class="info-service-item"
-        v-for="index in goods.services.length - 1"
+        v-for="index in (goods.services.length - 1)"
         v-if="goods.services[index - 1].icon"
       >
         <img :src="goods.services[index - 1].icon" alt="" />
