@@ -1,6 +1,6 @@
 <template>
 <div id="shop-item">
-    <div class="item-selector">
+    <div class="item-selector item">
       <CheckButton :isChecked="product.checked" @click.native="checkClick"></CheckButton>
     </div>
     <div class="item-img">
@@ -55,9 +55,8 @@ export default {
   }
 
   .item-selector {
-    width: 14%;
+    width: 22px;
     display: flex;
-    justify-content: center;
     align-items: center;
   }
 
