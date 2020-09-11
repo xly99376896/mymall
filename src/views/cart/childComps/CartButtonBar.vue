@@ -57,12 +57,13 @@ export default {
 <style scoped>
 .button-bar{
     height: 40px;
-    position: relative;
-    bottom: 49px;
+    position: fixed;
+    bottom: 54px;
+    right: 0;
+    left: 0;
     background-color: #fff;
     border-top: 1px solid #ccc;
     display: flex;
-    
     font-size: 14px;
 }
 .check-content{

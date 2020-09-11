@@ -2,7 +2,7 @@
 <div class="cart">
     <nav-bar class="nav-bar"><div slot="center">购物车({{cartLength}})</div></nav-bar>
     <scroll class="con" ref="scroll">
-        <cart-list></cart-list>
+        <cart-list @imgLoad="imgLoad"></cart-list>
     </scroll>
     <cart-button-bar></cart-button-bar>
 </div>
@@ -14,6 +14,8 @@ import CartButtonBar from './childComps/CartButtonBar'
 
 import NavBar from '@/components/common/navbar/NavBar'
 import Scroll from '@/components/common/scroll/Scroll'
+
+import {debounce} from '@/common/utils'
 
 import {mapGetters} from 'vuex'
 
@@ -31,14 +33,24 @@ data() {
     }
 },
 computed: {
-    ...mapGetters(['cartLength'])
+    ...mapGetters(['cartLength']),
+    activated() {
+        this.$ref.scroll.refresh()
+    }
 },
 mounted() {
-     const refresh = debounce(this.$refs.scroll.refresh,500)
-     this.itemListener = () => {
-         refresh()
-     }
-     this.$bus.$on('detailItemImageLoad', this.itemListener)
+    //  const refresh = debounce(this.$refs.scroll.refresh,500)
+    //  this.itemListener = () => {
+    //      refresh()
+    //  }
+    //  this.$bus.$on('imgLoad', this.itemListener)
+},
+
+methods: {
+    imgLoad() {
+        const refresh = debounce(this.$refs.scroll.refresh,500)
+        refresh()
+    }
 },
 }
 
@@ -52,7 +64,7 @@ mounted() {
     height: 100vh;
 }
 .con{
-    height: calc(100% - 93px);
+    height: calc(100% - 138px);
     overflow: hidden;
 }
 </style>

@@ -2,7 +2,8 @@
 <div class="catr-list">
     <cart-list-item v-for="(item,index) in cartList" 
                     :key="index"
-                    :product="item"></cart-list-item>
+                    :product="item"
+                    v-on="$listeners"></cart-list-item>
 </div>
 </template>
 

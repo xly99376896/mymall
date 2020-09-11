@@ -39,7 +39,7 @@ export default {
          this.$store.commit('CheckClick',this.product)
      },
      imgLoad() {
-       this.$bus.$emit('imgLoad')
+       this.$emit('imgLoad')
      }
  },
 }
