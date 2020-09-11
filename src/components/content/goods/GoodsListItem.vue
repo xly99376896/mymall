@@ -27,14 +27,22 @@ computed: {
 },
 methods: {
     imageLoad() {
-        if (this.$route.path.indexOf('/home') !== -1) {
-            this.$bus.$emit('homeItemImageLoad')
-        } else if(this.$route.path.indexOf('/detail') !== -1) {
-            this.$bus.$emit('detailItemImageLoad')
-        }
+        // if (this.$route.path.indexOf('/home') !== -1) {
+        //     this.$bus.$emit('homeItemImageLoad')
+        // } else if(this.$route.path.indexOf('/detail') !== -1) {
+        //     this.$bus.$emit('detailItemImageLoad')
+        // }
+        this.$emit('itemImageLoad')
+        
     },
     itemClick() {
-        this.$router.push('/detail/' + this.goodsItem.iid)
+        // this.$router.push('/detail/' + this.goodsItem.iid)
+        this.$router.push({
+            path: '/detail/',
+            query: {
+                iid: this.goodsItem.iid
+            }
+        })
     }
 },
 }

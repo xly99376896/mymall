@@ -38,9 +38,6 @@ mounted() {
     this.scroll.on('pullingUp', () => {
         this.$emit('pullingup')
     })
-
-    
-    
 },
 methods: {
     scrollTo(x,y,time=300){

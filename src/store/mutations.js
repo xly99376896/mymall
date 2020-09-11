@@ -8,5 +8,11 @@ export default {
       },
       CheckClick(state, payload) {
         payload.checked = !payload.checked
+      },
+      NoSelecr(state, payload) {
+        state.cartList.forEach(item => item.checked = false)
+      },
+      SelecrAll(state, payload) {
+        state.cartList.forEach(item => item.checked = true)
       }
 }

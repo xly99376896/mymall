@@ -9,7 +9,7 @@ const Detail = () => import('@/views/detail/Detail.vue')
 Vue.use(VueRouter)
 
   const routes = [
-    {
+  {
       path: '',
       redirect: '/home'
   },
@@ -30,8 +30,9 @@ Vue.use(VueRouter)
       component: Profile
   },
   {
-    path: '/detail/:iid',
-    component: Detail
+    // path: '/detail/:iid',
+      path: '/detail/',
+      component: Detail
   },
 ]
 

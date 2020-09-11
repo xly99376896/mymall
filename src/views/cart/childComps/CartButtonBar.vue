@@ -36,18 +36,17 @@ export default {
          }).length
      },
      isSelectAll() {
-         //return !(this.$store.state.cartList.filter(item => !item.checked).length)
          if (this.$store.state.cartList.length === 0) return false
-         return !this.$store.state.cartList.find(item => !item.checked)
+         return this.$store.state.cartList.every(item => item.checked)
      }
  },
  methods: {
      checkClick() {
          //console.log("000");
          if (this.isSelectAll) {
-             this.$store.state.cartList.forEach(item => item.checked = false)
+            this.$store.commit('NoSelecr')
          } else {
-             this.$store.state.cartList.forEach(item => item.checked = true)
+            this.$store.commit('SelecrAll')
          }
      }
  },

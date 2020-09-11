@@ -17,7 +17,7 @@
         <tab-control ref="tabControl2" 
                      :titles="['流行','新款','精选']" 
                      @tabclick="tabclick"></tab-control>
-        <goods-list :goods="showGoods"></goods-list>
+        <goods-list :goods="showGoods" @itemImageLoad="itemImageLoad"></goods-list>
     </scroll>
     <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
 </div>
@@ -96,11 +96,13 @@ created() {
 },
 mounted() {
     //图片加载完的事件监听
-      const refresh = debounce(this.$refs.scroll.refresh,500)
-      this.itemListener = () => {
-          refresh()
-      }
-      this.$bus.$on('homeItemImageLoad', this.itemListener)
+    //   const refresh = debounce(this.$refs.scroll.refresh,500)
+    //   this.itemListener = () => {
+    //       refresh()
+    //   }
+    //   this.$bus.$on('homeItemImageLoad', this.itemListener)
+
+      
 },
 methods: {
 
@@ -138,6 +140,10 @@ methods: {
     swiperImageLoad() {
         this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
     },
+    itemImageLoad() {
+        const refresh = debounce(this.$refs.scroll.refresh,500)
+        refresh()
+    },
 
     //网络请求相关
     getHomeMultidata(){
@@ -147,10 +153,10 @@ methods: {
     })
     },
     getHomeGoods(type) {
-        const page=this.goods[type].page+1
+        const page = this.goods[type].page + 1;
         getHomeGoods(type,page).then(res => {
             this.goods[type].list.push(...res.data.list)
-            this.goods[type].page+=1
+            this.goods[type].page += 1
 
             this.$refs.scroll.finishPullUp()
     })
